@@ -1,0 +1,5 @@
+---
+- name: Install default packages
+  hosts: all
+  roles:
+  - default_packages

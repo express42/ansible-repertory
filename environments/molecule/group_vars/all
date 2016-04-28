@@ -1,0 +1,3 @@
+zabbix_api_use: True
+zabbix_url: "http://{{ hostvars['zabbix-server']['ansible_eth1']['ipv4']['address'] }}"
+agent_listeninterface: eth1

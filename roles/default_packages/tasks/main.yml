@@ -1,0 +1,4 @@
+- name: Install GnuPG v.2
+  package:
+    name: gnupg2
+    state: present
