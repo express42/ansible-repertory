@@ -108,6 +108,7 @@ vagrant:
   providers:
     - name: digital_ocean
       type: digital_ocean
+      ssh_key_name_from_env: true
       options:
         image: ubuntu-14-04-x64
         region: ams3

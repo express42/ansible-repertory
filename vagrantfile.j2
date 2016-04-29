@@ -78,8 +78,13 @@ Vagrant.configure('2') do |config|
     override.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
     {%- if provider.options %}
+      {%- if provider.ssh_key_name_from_env %}
+    digital_ocean.ssh_key_name = ENV["SSH_KEY_NAME"]
+      {%- endif %}
       {%- for k, v in provider.options.iteritems()|sort %}
+      {%- if not provider.ssh_key_name_from_env or not (provider.ssh_key_name_from_env and k == 'ssh_key_name') %}
     digital_ocean.{{ k }} = '{{ v }}'
+      {%- endif %}
       {%- endfor %}
       {%- if not provider.options.image %}
     digital_ocean.image = 'ubuntu-14-04-x64'
