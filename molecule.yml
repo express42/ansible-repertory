@@ -106,11 +106,17 @@ vagrant:
       #    cmd: run_remote 'subscription-manager unregister'
 
   providers:
+    - name: digital_ocean
+      type: digital_ocean
+      options:
+        image: ubuntu-14-04-x64
+        region: ams3
+        size: 512mb
     - name: virtualbox
       type: virtualbox
-#      options:
-#        memory: 512
-#        cpus: 2
+      options:
+        memory: 512
+        cpus: 1
 
   instances:
     - name: common

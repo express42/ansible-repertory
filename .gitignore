@@ -1,3 +1,4 @@
+site.retry
 vault.key
 .vagrant
 .imported_roles
