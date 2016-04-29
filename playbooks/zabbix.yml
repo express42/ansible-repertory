@@ -5,7 +5,7 @@
   - { role: ANXS.postgresql, become: yes }
   - { role: dj-wasabi.zabbix-server }
   vars_files:
-  - "{{inventory_dir}}/vars/zabbix-server.yml"
+  - "{{inventory_dir}}/play_vars/zabbix-server.yml"
 
 - name: Configure zabbix agent
   hosts: all

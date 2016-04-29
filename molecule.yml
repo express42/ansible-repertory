@@ -41,7 +41,7 @@ molecule:
         - create
         - converge
 #        - idempotence
-        - verify
+#        - verify
         - destroy
 
 # configuration options for the internal call to ansible-playbook
