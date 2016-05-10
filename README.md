@@ -5,6 +5,10 @@ This repository is used as a good start point for infrastructure development. It
 
 The mastery of the ensemble is determined by the quantity and quality of plays performed. Repertory is created to comprise everything needed for server infrastructure of any level and complexity.
 
+## Basic principles
+* Playbook per application
+* All variables should be defined in environments' vars files
+
 # Directory structure
 
 * `environments/` - root directory for environments
@@ -36,7 +40,7 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 * All tasks should be defined in roles
 
 ## Playbooks
-* Playbooks contain only roles, groups of hosts and files with variable
+* Playbooks contain only roles, groups of hosts and vars files
 * Playbook should contain everything needed for application to start
 * Avoid setting variables and tasks in playbooks
 
@@ -69,7 +73,8 @@ molecule destroy --provider=digital_ocean
 ```
 
 ## Using with your infrastructure
-* Remove excessive roles from requirements.yml and python modules from requirements.txt
+* Remove excessive roles from requirements.yml, python modules from requirements.txt and playbooks
+* Make changes to site.yml
 * Make changes to vars files for molecule environment
 * Test changes with command
 ```sh
@@ -79,7 +84,7 @@ molecule test --provider=digital_ocean
 * Make changes to inventory and vars files
 * Run command
 ```sh
-ansible-playbook site.yml --inventory-file=./environments/new_environment/nventory
+ansible-playbook site.yml --inventory-file=./environments/new_environment/inventory
 ```
 ## Molecule
 
