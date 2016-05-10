@@ -47,6 +47,7 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 ```sh
 git clone git@github.com:vitkhab/ansible-repertory.git
 ``` 
+* Install [the latest release of Vagrant][Vagrant]
 * Install prerequisites
 ```sh
 cd ansible-repertory
@@ -55,24 +56,40 @@ pip install -r requirements.txt
 touch vault.key
 ```
 * Create VMs using Digital Ocean
+  * %DOTOKEN% - Digital Ocean token (if you haven't got one you can create it at https://cloud.digitalocean.com/settings/api/tokens)
+  * %SOMENAME% - Name of SSH key at Digital Ocean, it should match your key at https://cloud.digitalocean.com/settings/security 
 ```sh
 export DO_TOKEN=%DOTOKEN%
 export SSH_KEY_NAME='%SOMENAME%'
 molecule converge --provider=digital_ocean
 ```
-  * %DOTOKEN% - Digital Ocean token (if you haven't got one you can create it at https://cloud.digitalocean.com/settings/api/tokens)
-  * %SOMENAME% - Name of SSH key at Digital Ocean, it should match your key at https://cloud.digitalocean.com/settings/security 
 * Destroy created VMs
 ```sh
 molecule destroy --provider=digital_ocean
 ```
 
 ## Using with your infrastructure
-* Copy environment 'molecule'
+* Remove excessive roles from requirements.yml and python modules from requirements.txt
+* Make changes to vars files for molecule environment
+* Test changes with command
+```sh
+molecule test --provider=digital_ocean
+```
+* Copy molecule environment to new environment
 * Make changes to inventory and vars files
 * Run command
 ```sh
-asnible-playbook site.yml --inventory-file=./environments/new_environment/nventory
+ansible-playbook site.yml --inventory-file=./environments/new_environment/nventory
+```
+## Molecule
+
+First install the [latest release of Vagrant][Vagrant].
+```sh
+molecule list
+molecule converge
+molecule status
+molecule login common
+molecule destroy
 ```
 
 # Testing using Travis-CI
@@ -94,12 +111,8 @@ git push
 # ToDo
 * Make serverspec tests
 * Update default packages playbook
-* Add more playbooks
-* Clean up molecule.yml from comments
-* Recommended playbooks
-* Add workflow to README file
+* Add more playbooks or list recommended ones
 * Add base role (as it is in testo)
-* Add help for molecule 
 
 # Known issues
 * 'zabbix_url' variable used in playbooks dj-wasabi.zabbix-agent and dj-wasabi.zabbix-server for different purposes
@@ -108,3 +121,6 @@ git push
   * Workaround: make API calls serial
 * While using VirtualBox for testing you should change all mentions of interface 'eth0' to 'eth1'
 * Travis check will fail if VMs are already exists in DO
+
+[Vagrant]: https://www.vagrantup.com/downloads.html "Vagrant"
+
