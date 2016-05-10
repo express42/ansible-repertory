@@ -1,3 +1,4 @@
-- ANXS.postgresql
-- dj-wasabi.zabbix-agent
-- dj-wasabi.zabbix-server
+---
+- src: ANXS.postgresql
+- src: dj-wasabi.zabbix-agent
+- src: dj-wasabi.zabbix-server
