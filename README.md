@@ -24,6 +24,7 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 * `requirements.txt` - python requirements
 * `requirements.yml` - ansible playbooks' requirements
 * `site.yml` - playbook containing every app in infrastructure
+* `vagrantfile.j2` - custom Vagrantfile template for molecule
 
 # What goes where
 
@@ -47,6 +48,7 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 # Getting started
 
 ## Fast start
+* Do not forget use Python 2.7 instead of 3.x. Molecule and Ansible doesn't support Python 3.x
 * Clone git repo
 ```sh
 git clone git@github.com:vitkhab/ansible-repertory.git
@@ -127,5 +129,9 @@ git push
 * While using VirtualBox for testing you should change all mentions of interface 'eth0' to 'eth1'
 * Travis check will fail if VMs are already exists in DO
 
-[Vagrant]: https://www.vagrantup.com/downloads.html "Vagrant"
+# Links
+* [Ansible documentation](https://docs.ansible.com/ansible/index.html "Ansible documentation")
+* [Molecule documentation](https://molecule.readthedocs.io/en/master/ "Molecule documentation")
+* [Vagrant documentation](https://www.vagrantup.com/docs/ "Vagrant documentation")
 
+[Vagrant]: https://www.vagrantup.com/downloads.html "Vagrant"
