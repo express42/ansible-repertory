@@ -54,6 +54,10 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 git clone git@github.com:vitkhab/ansible-repertory.git
 ``` 
 * Install [the latest release of Vagrant][Vagrant]
+* Install Vagrant DigitalOcean provider
+```sh
+vagrant plugin install vagrant-digitalocean
+```
 * Install prerequisites
 ```sh
 cd ansible-repertory
