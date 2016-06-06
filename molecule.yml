@@ -1,12 +1,13 @@
 ---
 molecule:
-    molecule_dir: environments/molecule
-    test:
-      sequence:
-        - destroy
-        - create
-        - converge
-        - destroy
+  molecule_dir: environments/molecule
+  test:
+    sequence:
+      - destroy
+      - create
+      - converge
+      - destroy
+  vagrantfile_template: vagrantfile.j2
 ansible:
     config_file: ansible.cfg
     playbook: site.yml
