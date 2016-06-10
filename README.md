@@ -73,6 +73,12 @@ export DO_TOKEN=%DOTOKEN%
 export SSH_KEY_NAME='%SOMENAME%'
 molecule converge --provider=digital_ocean
 ```
+* Run idempotence and serverspec tests on your infrastructure
+```sh
+molecule idempotence --provider=digital_ocean
+molecule verify --provider=digital_ocean
+```
+
 * Destroy created VMs
 ```sh
 molecule destroy --provider=digital_ocean
@@ -120,7 +126,6 @@ git push
 ```
 
 # ToDo
-* Make serverspec tests
 * Update default packages playbook
 * Add more playbooks or list recommended ones
 * Add base role (as it is in testo)
@@ -132,6 +137,8 @@ git push
   * Workaround: make API calls serial
 * While using VirtualBox for testing you should change all mentions of interface 'eth0' to 'eth1'
 * Travis check will fail if VMs are already exists in DO
+* `molecule verify` doesn't launch the tests until you do not fix all lint errors. It may cause trouble if you use roles from Ansible-galaxy (Molecule checks them too)
+* Testinfra testing framework doesn't work well at this moment
 
 # Links
 * [Ansible documentation](https://docs.ansible.com/ansible/index.html "Ansible documentation")
