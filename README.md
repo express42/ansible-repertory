@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/vitkhab/ansible-repertory.svg?branch=master)](https://travis-ci.org/vitkhab/ansible-repertory)
+[![Build Status](https://travis-ci.org/express42/ansible-repertory.svg?branch=master)](https://travis-ci.org/express42/ansible-repertory)
 
 # Overview
 This repository is used as a good start point for infrastructure development. It contains basic roles and describes workflow to create solid solution.
@@ -51,7 +51,7 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 * Do not forget use Python 2.7 instead of 3.x. Molecule and Ansible doesn't support Python 3.x
 * Clone git repo
 ```sh
-git clone git@github.com:vitkhab/ansible-repertory.git
+git clone git@github.com:express42/ansible-repertory.git
 ``` 
 * Install [the latest release of Vagrant][Vagrant]
 * Install Vagrant DigitalOcean provider
