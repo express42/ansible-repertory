@@ -8,6 +8,12 @@ molecule:
       - converge
       - destroy
   vagrantfile_template: vagrantfile.j2
+  # disable trailing spaces checks for these directories
+  ignore_paths:
+    - .git
+    - .vagrant
+    - .molecule
+    - .imported_roles
 ansible:
     config_file: ansible.cfg
     playbook: site.yml
