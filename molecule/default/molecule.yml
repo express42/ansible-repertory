@@ -22,5 +22,6 @@ scenario:
   name: default
 verifier:
   name: testinfra
+  directory: ../resources/tests/
   lint:
     name: flake8
