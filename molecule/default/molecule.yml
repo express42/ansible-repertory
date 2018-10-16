@@ -25,7 +25,7 @@ provisioner:
   env:
     ANSIBLE_ROLES_PATH: ../../roles/:../../.imported_roles/
   playbooks:
-    converge: ../../site.yml
+    converge: playbook.yml
 scenario:
   name: default
 verifier:
