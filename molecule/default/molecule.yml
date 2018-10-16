@@ -38,6 +38,8 @@ provisioner:
     ANSIBLE_ROLES_PATH: ../../roles/:../../.imported_roles/
   playbooks:
     converge: playbook.yml
+  lint:
+    name: ansible-lint
 scenario:
   name: default
 verifier:
