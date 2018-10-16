@@ -40,6 +40,9 @@ provisioner:
     converge: playbook.yml
   lint:
     name: ansible-lint
+    options:
+      exclude:
+        - .imported_roles/
 scenario:
   name: default
 verifier:
