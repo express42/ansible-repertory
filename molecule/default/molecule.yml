@@ -13,6 +13,7 @@ lint:
   name: yamllint
   options:
     config-file: molecule/default/yamllint.conf
+    s: False
 platforms:
   - name: common
     box: ubuntu-18.04
