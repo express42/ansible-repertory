@@ -11,7 +11,8 @@ driver:
     name: parallels
 lint:
   name: yamllint
-  enabled: False
+  options:
+    config-file: molecule/default/yamllint.conf
 platforms:
   - name: common
     box: ubuntu-18.04
