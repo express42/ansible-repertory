@@ -13,7 +13,16 @@ lint:
   name: yamllint
   enabled: False
 platforms:
-  - name: instance
+  - name: common
+    box: ubuntu-18.04
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    provision: false
+  - name: zabbix-server
+    groups:
+      - zabbix_server
     box: ubuntu-18.04
     interfaces:
       - auto_config: true
