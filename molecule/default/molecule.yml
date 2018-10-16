@@ -3,6 +3,7 @@ dependency:
   name: galaxy
   options:
     role-file: requirements.yml
+    force: False
 driver:
   name: vagrant
   provider:
