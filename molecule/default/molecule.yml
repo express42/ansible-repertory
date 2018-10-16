@@ -16,6 +16,8 @@ platforms:
         network_name: private_network
         type: dhcp
     provision: false
+provisioner:
+  name: ansible
 scenario:
   name: default
 verifier:
