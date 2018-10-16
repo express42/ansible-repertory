@@ -31,6 +31,9 @@ platforms:
     provision: false
 provisioner:
   name: ansible
+  inventory:
+    links:
+      group_vars: ../resources/group_vars/
   env:
     ANSIBLE_ROLES_PATH: ../../roles/:../../.imported_roles/
   playbooks:
