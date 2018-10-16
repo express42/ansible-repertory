@@ -1,0 +1,24 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: parallels
+lint:
+  name: yamllint
+  enabled: False
+platforms:
+  - name: instance
+    box: ubuntu-18.04
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    provision: false
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
