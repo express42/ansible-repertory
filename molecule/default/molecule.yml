@@ -23,7 +23,7 @@ platforms:
 provisioner:
   name: ansible
   env:
-    ANSIBLE_ROLES_PATH: ../../roles/
+    ANSIBLE_ROLES_PATH: ../../roles/:../../.imported_roles/
   playbooks:
     converge: ../../site.yml
 scenario:
