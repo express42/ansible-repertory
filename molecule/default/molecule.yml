@@ -16,7 +16,7 @@ lint:
     s: False
 platforms:
   - name: common
-    box: ubuntu-18.04
+    box: parallels/ubuntu-16.04
     interfaces:
       - auto_config: true
         network_name: private_network
@@ -25,7 +25,7 @@ platforms:
   - name: zabbix-server
     groups:
       - zabbix_server
-    box: ubuntu-18.04
+    box: parallels/ubuntu-16.04
     interfaces:
       - auto_config: true
         network_name: private_network
