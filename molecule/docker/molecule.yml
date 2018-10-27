@@ -1,0 +1,42 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+    roles-path: .imported_roles
+    force: False
+driver:
+  name: docker
+lint:
+  name: yamllint
+  options:
+    config-file: molecule/default/yamllint.conf
+    s: False
+platforms:
+  - name: common
+    image: ubuntu:18.04
+  - name: zabbix-server
+    groups:
+      - zabbix_server
+    image: ubuntu:18.04
+provisioner:
+  name: ansible
+  inventory:
+    links:
+      group_vars: ../resources/group_vars/
+  env:
+    ANSIBLE_ROLES_PATH: ../../roles/:../../.imported_roles/
+  playbooks:
+    converge: playbook.yml
+  lint:
+    name: ansible-lint
+    options:
+      exclude:
+        - .imported_roles/
+scenario:
+  name: docker
+verifier:
+  name: testinfra
+  directory: ../resources/tests/
+  lint:
+    name: flake8
