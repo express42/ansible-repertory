@@ -38,7 +38,7 @@ provisioner:
       exclude:
         - .imported_roles/
 scenario:
-  name: docker
+  name: default
 verifier:
   name: testinfra
   directory: ../resources/tests/
