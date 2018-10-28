@@ -46,7 +46,7 @@ provisioner:
       exclude:
         - .imported_roles/
 scenario:
-  name: default
+  name: parallels
 verifier:
   name: testinfra
   directory: ../resources/tests/
