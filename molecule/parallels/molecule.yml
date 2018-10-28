@@ -15,22 +15,22 @@ lint:
     config-file: molecule/resources/yamllint.conf
     s: false
 platforms:
-  - name: common
-    box: parallels/ubuntu-16.04
-    interfaces:
-      - auto_config: true
-        network_name: private_network
-        type: dhcp
-    provision: false
-  - name: zabbix-server
-    groups:
-      - zabbix_server
-    box: parallels/ubuntu-16.04
-    interfaces:
-      - auto_config: true
-        network_name: private_network
-        type: dhcp
-    provision: false
+- name: common
+  box: parallels/ubuntu-16.04
+  interfaces:
+  - auto_config: true
+    network_name: private_network
+    type: dhcp
+  provision: false
+- name: zabbix-server
+  groups:
+  - zabbix_server
+  box: parallels/ubuntu-16.04
+  interfaces:
+  - auto_config: true
+    network_name: private_network
+    type: dhcp
+  provision: false
 provisioner:
   name: ansible
   inventory:
@@ -44,7 +44,7 @@ provisioner:
     name: ansible-lint
     options:
       exclude:
-        - .imported_roles/
+      - .imported_roles/
 scenario:
   name: parallels
 verifier:

@@ -13,16 +13,16 @@ lint:
     config-file: molecule/resources/yamllint.conf
     s: false
 platforms:
-  - name: common
-    image: ubuntu:16.04
-  - name: zabbix-server
-    groups:
-      - zabbix_server
-    image: ubuntu:16.04
-    privileged: true
-    volume_mounts:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: /sbin/init
+- name: common
+  image: ubuntu:16.04
+- name: zabbix-server
+  groups:
+  - zabbix_server
+  image: ubuntu:16.04
+  privileged: true
+  volume_mounts:
+  - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+  command: /sbin/init
 provisioner:
   name: ansible
   inventory:
@@ -36,7 +36,7 @@ provisioner:
     name: ansible-lint
     options:
       exclude:
-        - .imported_roles/
+      - .imported_roles/
 scenario:
   name: default
 verifier:
