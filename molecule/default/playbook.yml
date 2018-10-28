@@ -1,0 +1,4 @@
+---
+- import_playbook: ../../site.yml
+  vars:
+    inventory_dir: "{{playbook_dir}}/../molecule/resources/"

@@ -1,3 +1,4 @@
-ansible
-molecule
-zabbix-api
+ansible==2.7.0
+molecule==2.18.1
+zabbix-api==0.5.3
+python-vagrant==0.5.15
