@@ -19,6 +19,10 @@ platforms:
     groups:
       - zabbix_server
     image: ubuntu:16.04
+    privileged: True
+    volume_mounts:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: /sbin/init
 provisioner:
   name: ansible
   inventory:
