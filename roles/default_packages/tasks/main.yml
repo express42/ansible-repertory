@@ -1,3 +1,4 @@
+---
 - name: Install GnuPG v.2
   apt:
     name: gnupg2
