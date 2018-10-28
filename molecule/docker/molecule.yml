@@ -14,11 +14,11 @@ lint:
     s: False
 platforms:
   - name: common
-    image: ubuntu:18.04
+    image: ubuntu:16.04
   - name: zabbix-server
     groups:
       - zabbix_server
-    image: ubuntu:18.04
+    image: ubuntu:16.04
 provisioner:
   name: ansible
   inventory:
