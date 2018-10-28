@@ -12,7 +12,7 @@ driver:
 lint:
   name: yamllint
   options:
-    config-file: molecule/default/yamllint.conf
+    config-file: molecule/resources/yamllint.conf
     s: False
 platforms:
   - name: common
