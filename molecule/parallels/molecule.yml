@@ -4,7 +4,7 @@ dependency:
   options:
     role-file: requirements.yml
     roles-path: .imported_roles
-    force: False
+    force: false
 driver:
   name: vagrant
   provider:
@@ -13,7 +13,7 @@ lint:
   name: yamllint
   options:
     config-file: molecule/resources/yamllint.conf
-    s: False
+    s: false
 platforms:
   - name: common
     box: parallels/ubuntu-16.04

@@ -1,6 +1,6 @@
 ---
 - name: Install default packages
   hosts: all
-  become: yes
+  become: true
   roles:
   - default_packages

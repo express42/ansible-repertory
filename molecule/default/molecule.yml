@@ -4,14 +4,14 @@ dependency:
   options:
     role-file: requirements.yml
     roles-path: .imported_roles
-    force: False
+    force: false
 driver:
   name: docker
 lint:
   name: yamllint
   options:
     config-file: molecule/resources/yamllint.conf
-    s: False
+    s: false
 platforms:
   - name: common
     image: ubuntu:16.04
@@ -19,7 +19,7 @@ platforms:
     groups:
       - zabbix_server
     image: ubuntu:16.04
-    privileged: True
+    privileged: true
     volume_mounts:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: /sbin/init
