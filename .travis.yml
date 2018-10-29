@@ -5,6 +5,7 @@ python:
 script:
 - molecule lint
 - molecule destroy
+- molecule dependency
 - molecule syntax
 - molecule converge
 - travis_wait 20 molecule idempotence
