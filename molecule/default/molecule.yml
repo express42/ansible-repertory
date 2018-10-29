@@ -15,6 +15,10 @@ lint:
 platforms:
 - name: common
   image: ubuntu:16.04
+  privileged: true
+  volume_mounts:
+  - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+  command: /sbin/init
 - name: zabbix-server
   groups:
   - zabbix_server
