@@ -6,7 +6,9 @@ dependency:
     roles-path: .imported_roles
     force: False
 driver:
-  name: docker
+  name: vagrant
+  provider:
+    name: parallels
 lint:
   name: yamllint
   options:
@@ -14,15 +16,21 @@ lint:
     s: False
 platforms:
   - name: common
-    image: ubuntu:16.04
+    box: parallels/ubuntu-16.04
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    provision: false
   - name: zabbix-server
     groups:
       - zabbix_server
-    image: ubuntu:16.04
-    privileged: True
-    volume_mounts:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: /sbin/init
+    box: parallels/ubuntu-16.04
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+    provision: false
 provisioner:
   name: ansible
   inventory:
@@ -38,7 +46,7 @@ provisioner:
       exclude:
         - .imported_roles/
 scenario:
-  name: default
+  name: parallels
 verifier:
   name: testinfra
   directory: ../resources/tests/
