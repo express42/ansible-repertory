@@ -1,3 +1,2 @@
 zabbix_version: 3.4
 zabbix_url: "http://{{ hostvars['zabbix-server']['ansible_default_ipv4']['address'] }}/zabbix/"
-agent_listeninterface: eth0
