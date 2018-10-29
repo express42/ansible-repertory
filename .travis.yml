@@ -3,4 +3,4 @@ language: python
 python:
 - 2.7
 script:
-- molecule test
+- travis_wait 20 molecule test
