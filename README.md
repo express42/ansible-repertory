@@ -17,14 +17,15 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
     * `host_vars/` - variables defined per host
     * `play_vars/` - variables defined per play in playbooks
     * `inventory_file` - inventory file with hosts related to the environment
+* `molecule/` - molecule v2 configuration
+  * `resources/` - shared among molecule scenarios resources
+  * `scenario_name/` - specific molecule scenarios divided by platform, default - docker containers
 * `playbooks/` - directory for playbooks, playbook per application
 * `roles/` - custom roles
 * `ansible.cfg` - config for ansible
-* `molecule.yml` - config for molecule
 * `requirements.txt` - python requirements
 * `requirements.yml` - ansible playbooks' requirements
 * `site.yml` - playbook containing every app in infrastructure
-* `vagrantfile.j2` - custom Vagrantfile template for molecule
 
 # What goes where
 
@@ -44,6 +45,7 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 * Playbooks contain only roles, groups of hosts and vars files
 * Playbook should contain everything needed for application to start
 * Avoid setting variables and tasks in playbooks
+* You can use `site.yml` as the only entrypoint for your configuration
 
 # Getting started
 
@@ -53,10 +55,10 @@ The mastery of the ensemble is determined by the quantity and quality of plays p
 ```sh
 git clone git@github.com:express42/ansible-repertory.git
 ``` 
-* Install [the latest release of Vagrant][Vagrant]
-* Install Vagrant DigitalOcean provider
+* Install [the latest release of Vagrant][Vagrant] if you will use ansible-repertory with Parallels VMs
+* Then install Vagrant plugin for Parallels
 ```sh
-vagrant plugin install vagrant-digitalocean
+vagrant plugin install vagrant-parallels
 ```
 * Install prerequisites
 ```sh
@@ -65,32 +67,18 @@ ansible-galaxy install -r requirements.yml
 pip install -r requirements.txt
 touch vault.key
 ```
-* Create VMs using Digital Ocean
-  * %DOTOKEN% - Digital Ocean token (if you haven't got one you can create it at https://cloud.digitalocean.com/settings/api/tokens)
-  * %SOMENAME% - Name of SSH key at Digital Ocean, it should match your key at https://cloud.digitalocean.com/settings/security 
+* Run tests
 ```sh
-export DO_TOKEN=%DOTOKEN%
-export SSH_KEY_NAME='%SOMENAME%'
-molecule converge --provider=digital_ocean
-```
-* Run idempotence and serverspec tests on your infrastructure
-```sh
-molecule idempotence --provider=digital_ocean
-molecule verify --provider=digital_ocean
-```
-
-* Destroy created VMs
-```sh
-molecule destroy --provider=digital_ocean
+molecule test
 ```
 
 ## Using with your infrastructure
 * Remove excessive roles from requirements.yml, python modules from requirements.txt and playbooks
 * Make changes to site.yml
-* Make changes to vars files for molecule environment
+* Make changes to vars files in `example` environment
 * Test changes with command
 ```sh
-molecule test --provider=digital_ocean
+molecule test
 ```
 * Copy molecule environment to new environment
 * Make changes to inventory and vars files
@@ -100,7 +88,6 @@ ansible-playbook site.yml --inventory-file=./environments/new_environment/invent
 ```
 ## Molecule
 
-First install the [latest release of Vagrant][Vagrant].
 ```sh
 molecule list
 molecule converge
@@ -112,18 +99,7 @@ molecule destroy
 # Testing using Travis-CI
 * Fork git repository
 * Add repository into Travis-CI
-* Add 'DO_TOKEN' in repository's 'Environment Variables' with token for Digital Ocean
-* Clone repository
-* Inside repository's working dir run commands
-```sh
-ssh-keygen -b 4096 -N '' -f deploy_key
-gem install travis
-travis login
-travis encrypt-file deploy_key --add
-rm deploy_key deploy_key.pub
-git commit -a -m 'Updated Travis CI info'
-git push
-```
+* Push new commits
 
 # ToDo
 * Update default packages playbook
@@ -136,9 +112,6 @@ git push
 * API calls in playbook dj-wasabi.zabbix-agent made from several servers can interfere with each other
   * Workaround: make API calls serial
 * While using VirtualBox for testing you should change all mentions of interface 'eth0' to 'eth1'
-* Travis check will fail if VMs are already exists in DO
-* `molecule verify` doesn't launch the tests until you do not fix all lint errors. It may cause trouble if you use roles from Ansible-galaxy (Molecule checks them too)
-* Testinfra testing framework doesn't work well at this moment
 
 # Links
 * [Ansible documentation](https://docs.ansible.com/ansible/index.html "Ansible documentation")
