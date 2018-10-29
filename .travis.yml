@@ -3,4 +3,14 @@ language: python
 python:
 - 2.7
 script:
-- travis_wait 120 molecule test
+- molecule lint
+- molecule destroy
+- molecule dependency
+- molecule syntax
+- molecule create
+- molecule prepare
+- molecule converge
+- travis_wait 20 molecule idempotence
+- molecule side_effect
+- molecule verify
+- molecule destroy
