@@ -5,10 +5,7 @@ python:
 script:
 - molecule lint
 - molecule destroy
-- molecule dependency
 - molecule syntax
-- molecule create
-- molecule prepare
 - molecule converge
 - travis_wait 20 molecule idempotence
 - molecule side_effect
