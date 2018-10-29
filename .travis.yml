@@ -8,6 +8,6 @@ script:
 - molecule syntax
 - molecule converge
 - travis_wait 20 molecule idempotence
-- molecule side_effect
+- molecule side-effect
 - molecule verify
 - molecule destroy
