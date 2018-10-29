@@ -5,6 +5,7 @@
   roles:
   - { role: ANXS.postgresql }
   - { role: dj-wasabi.zabbix-server }
+  - { role: dj-wasabi.zabbix-web }
   vars_files:
   - "{{inventory_dir}}/play_vars/zabbix-server.yml"
 

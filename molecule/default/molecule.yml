@@ -23,6 +23,8 @@ platforms:
   volume_mounts:
   - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
   command: /sbin/init
+  published_ports:
+  - 127.0.0.1:8080:80/tcp
 provisioner:
   name: ansible
   inventory:
