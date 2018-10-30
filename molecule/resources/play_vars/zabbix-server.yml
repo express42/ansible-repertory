@@ -1,1 +1,0 @@
-zabbix_url: "{{ hostvars['zabbix-server']['ansible_eth0']['ipv4']['address'] }}"

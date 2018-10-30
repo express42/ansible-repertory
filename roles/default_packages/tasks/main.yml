@@ -1,6 +1,7 @@
+---
 - name: Install GnuPG v.2
   apt:
     name: gnupg2
     state: present
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 86400

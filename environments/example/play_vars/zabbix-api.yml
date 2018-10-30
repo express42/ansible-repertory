@@ -1,1 +1,2 @@
-zabbix_api_use: True
+---
+zabbix_api_use: true
