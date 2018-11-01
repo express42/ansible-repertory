@@ -2,3 +2,4 @@
 - import_playbook: ../../site.yml
   vars:
     inventory_dir: "{{playbook_dir}}/../molecule/resources/"
+    zabbix_url: "http://localhost:8080/zabbix/"

@@ -3,4 +3,4 @@
   hosts: all
   become: true
   roles:
-  - default_packages
+    - default_packages

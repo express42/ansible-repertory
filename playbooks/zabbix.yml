@@ -3,22 +3,23 @@
   hosts: zabbix_server
   become: true
   roles:
-  - { role: ANXS.postgresql }
-  - { role: dj-wasabi.zabbix-server }
+    - { role: ANXS.postgresql }
+    - { role: dj-wasabi.zabbix-server }
+    - { role: dj-wasabi.zabbix-web }
   vars_files:
-  - "{{inventory_dir}}/play_vars/zabbix-server.yml"
+    - "{{inventory_dir}}/play_vars/zabbix-server.yml"
 
 - name: Configure zabbix agent
   hosts: all
   become: true
   roles:
-  - { role: dj-wasabi.zabbix-agent }
+    - { role: dj-wasabi.zabbix-agent }
 
 - name: Create hosts, groups and templates on zabbix server
   hosts: all
   become: true
   roles:
-  - { role: dj-wasabi.zabbix-agent, become: false, tags: ['api'] }
+    - { role: dj-wasabi.zabbix-agent, become: false, tags: ['api'] }
   serial: 1
   vars_files:
-  - "{{inventory_dir}}/play_vars/zabbix-api.yml"
+    - "{{inventory_dir}}/play_vars/zabbix-api.yml"

@@ -1,28 +1,14 @@
 ---
 language: python
 python:
-- 2.7
-env:
-  global:
-  - SSH_KEY_NAME='Travis-CI'
-before_script:
-- openssl aes-256-cbc -K $encrypted_906c8976dfc2_key
-  -iv $encrypted_906c8976dfc2_iv -in deploy_key.enc -out deploy_key -d
-- chmod 600 deploy_key
-- mv deploy_key ~/.ssh/id_rsa
-- ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
-- touch vault.key
-- sudo wget
-  https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb
-- sudo dpkg -i vagrant_1.8.1_x86_64.deb
-- sudo vagrant plugin install vagrant-digitalocean
-- ansible-galaxy install -r requirements.yml
-- sudo chown -R travis /home/travis/.vagrant.d
-- sudo chmod -R 777 /home/travis/.vagrant.d
-- sudo chmod 0600 /home/travis/.vagrant.d/insecure_private_key
-- molecule destroy --provider=digital_ocean
+  - 3.6
 script:
-- molecule create --provider=digital_ocean
-- molecule converge --provider=digital_ocean
-after_script:
-- molecule destroy --provider=digital_ocean
+  - molecule lint
+  - molecule destroy
+  - molecule dependency
+  - molecule syntax
+  - molecule converge
+  - travis_wait 20 molecule idempotence
+  - molecule side-effect
+  - molecule verify
+  - molecule destroy
