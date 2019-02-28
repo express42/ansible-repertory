@@ -1,0 +1,9 @@
+all:
+  hosts:
+    linux_01:
+      ansible_hosts: 10.0.0.1
+  children:
+    webservers:
+      hosts:
+        apache_01:
+          ansible_hosts: 10.0.0.2
