@@ -9,7 +9,10 @@ driver:
   name: docker
 
 lint: |
-    yamllint -c molecule/resources/yamllint.conf .
+  set -e
+  yamllint .
+  flake8
+  ansible-lint
 
 platforms:
   - name: common

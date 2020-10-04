@@ -7,7 +7,7 @@
     - { role: dj-wasabi.zabbix-server }
     - { role: dj-wasabi.zabbix-web }
   vars_files:
-    - "{{inventory_dir}}/play_vars/zabbix-server.yml"
+    - "{{ inventory_dir }}/play_vars/zabbix-server.yml"
 
 - name: Configure zabbix agent
   hosts: all
@@ -22,4 +22,4 @@
     - { role: dj-wasabi.zabbix-agent, become: false, tags: ['api'] }
   serial: 1
   vars_files:
-    - "{{inventory_dir}}/play_vars/zabbix-api.yml"
+    - "{{ inventory_dir }}/play_vars/zabbix-api.yml"
