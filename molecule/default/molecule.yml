@@ -7,11 +7,10 @@ dependency:
     force: false
 driver:
   name: docker
-lint:
-  name: yamllint
-  options:
-    config-file: molecule/resources/yamllint.conf
-    s: false
+
+lint: |
+    yamllint -c molecule/resources/yamllint.conf .
+
 platforms:
   - name: common
     image: ubuntu:16.04
