@@ -1,4 +1,4 @@
-ansible==2.10.0
+ansible==2.10.7
 molecule==3.0.8
 zabbix-api==0.5.4
 python-vagrant==0.5.15
