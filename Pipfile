@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ansible = "*"
+zabbix-api = "*"
+
+[dev-packages]
+molecule = "*"
+python-vagrant = "*"
+docker-py = "*"
+pytest-xdist = "*"
+flake8 = "*"
+ansible-lint = "*"
+
+[requires]
+python_version = "3.9"

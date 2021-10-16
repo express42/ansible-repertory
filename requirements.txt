@@ -1,8 +1,0 @@
-ansible==2.10.0
-molecule==3.0.8
-zabbix-api==0.5.4
-python-vagrant==0.5.15
-docker-py==1.10.6
-pytest-xdist==2.1.0
-flake8==3.8.4
-ansible-lint==4.3.5
