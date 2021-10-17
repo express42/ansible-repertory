@@ -1,0 +1,51 @@
+---
+- name: Destroy
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  no_log: "{{ not (lookup('env', 'MOLECULE_DEBUG') | bool or molecule_yml.provisioner.log|default(false) | bool) }}"
+  tasks:
+    - name: Check env vars are set
+      fail:
+        msg: "Env variable {{ item }} is not defined"
+      when: not lookup('env', item)
+      no_log: false
+      run_once: true
+      loop:
+        - "GCE_PROJECT_ID"
+        - "GCE_CREDENTIALS_FILE"
+
+    - name: Destroy molecule instance(s)
+      gcp_compute_instance:
+        auth_kind: "serviceaccount"
+        name: "{{ item.name }}"
+        state: absent
+        zone: "{{ item.zone }}"
+        service_account_file: "{{ lookup('env', 'GCE_CREDENTIALS_FILE') }}"
+        project: "{{ lookup('env', 'GCE_PROJECT_ID') }}"
+      register: server
+      with_items: "{{ molecule_yml.platforms }}"
+      async: 7200
+      poll: 0
+
+    - name: Wait for instance(s) deletion to complete
+      async_status:
+        jid: "{{ item.ansible_job_id }}"
+      register: gce_jobs
+      until: gce_jobs.finished
+      retries: 300
+      with_items: "{{ server.results }}"
+
+    # Mandatory configuration for Molecule to function.
+
+    - name: Populate instance config
+      set_fact:
+        instance_conf: {}
+
+    - name: Dump instance config
+      copy:
+        content: "{{ instance_conf | to_json | from_json | molecule_to_yaml | molecule_header }}"
+        dest: "{{ molecule_instance_config }}"
+      when: server.changed | bool
+...
+    

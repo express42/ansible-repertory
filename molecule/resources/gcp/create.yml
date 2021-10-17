@@ -1,0 +1,98 @@
+---
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  no_log: "{{ not (lookup('env', 'MOLECULE_DEBUG') | bool or molecule_yml.provisioner.log|default(false) | bool) }}"
+  vars:
+    ssh_port: 22
+    #ssh_user: "{{ lookup('env', 'USER') }}"
+    ssh_user: "{{ ansible_ssh_user }}"
+    ssh_identity_file: "{{ lookup('env', 'HOME') }}/.ssh/google_compute_engine"
+  tasks:
+    - name: Check env vars are set
+      fail:
+        msg: "Env variable {{ item }} is not defined"
+      when: not lookup('env', item)
+      run_once: true
+      no_log: false
+      loop:
+        - "GCE_PROJECT_ID"
+        - "GCE_CREDENTIALS_FILE"
+
+    - name: Generate ssh keypair
+      openssh_keypair:
+        path: "{{ playbook_dir }}/id_rsa"
+        comment: "{{ ssh_user }}"
+      register: ssh_keypair
+
+    - name: Create molecule instance(s)
+      gcp_compute_instance:
+        auth_kind: "serviceaccount"
+        name: "{{ item.name }}"
+        zone: "{{ item.zone }}"
+        machine_type: "{{ item.machine_type }}"
+        service_account_file: "{{ lookup('env', 'GCE_CREDENTIALS_FILE') }}"
+        project: "{{ lookup('env', 'GCE_PROJECT_ID') }}"
+        metadata:
+          ssh-keys: "{{ ssh_user }}:{{ ssh_keypair.public_key }} {{ ssh_user }}"
+        disks:
+          - auto_delete: 'true'
+            boot: 'true'
+            initialize_params:
+              disk_size_gb: "{{ item.disk_size|default(10) }}"
+              source_image: "{{ item.image }}"
+        network_interfaces:
+          - access_configs:
+              - name: External NAT
+                type: ONE_TO_ONE_NAT
+        tags:
+          items: "{{ item.groups }}"
+      register: server
+      with_items: "{{ molecule_yml.platforms }}"
+      async: 7200
+      poll: 0
+
+    - name: Wait for instance(s) creation to complete
+      async_status:
+        jid: "{{ item.ansible_job_id }}"
+      register: gce_jobs
+      until: gce_jobs.finished
+      retries: 300
+      with_items: "{{ server.results }}"
+
+    - debug:
+        var: gce_jobs.results
+
+    # Mandatory configuration for Molecule to function.
+    - name: Populate instance config dict
+      set_fact:
+        instance_conf_dict: {
+          'instance': "{{ item.name }}",
+          'address': "{{ item.networkInterfaces[0].accessConfigs[0].natIP }}",
+          'user': "{{ ssh_user }}",
+          'port': "{{ ssh_port }}",
+          'identity_file': "{{ ssh_keypair.filename }}", }
+      with_items: "{{ gce_jobs.results }}"
+      register: instance_config_dict
+      when: server.changed | bool
+
+    - name: Convert instance config dict to a list
+      set_fact:
+        instance_conf: "{{ instance_config_dict.results | map(attribute='ansible_facts.instance_conf_dict') | list }}"
+      when: server.changed | bool
+
+    - name: Dump instance config
+      copy:
+        content: "{{ instance_conf | to_json | from_json | molecule_to_yaml | molecule_header }}"
+        dest: "{{ molecule_instance_config }}"
+      when: server.changed | bool
+
+    - name: Wait for SSH
+      wait_for:
+        port: "{{ ssh_port }}"
+        host: "{{ item.address }}"
+        search_regex: SSH
+        delay: 10
+      with_items: "{{ lookup('file', molecule_instance_config) | molecule_from_yaml }}"
+...
