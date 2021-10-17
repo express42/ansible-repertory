@@ -1,0 +1,60 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+    roles-path: .imported_roles
+    force: false
+
+driver:
+  name: gce
+    
+lint: |
+  set -e
+  yamllint .
+  flake8
+  ansible-lint
+
+platforms:
+  - name: common
+    zone: europe-west3-a
+    machine_type: n1-standard-1
+    disk_size: 15
+    image: projects/ubuntu-os-cloud/global/images/family/ubuntu-2004-lts
+  - name: zabbix_server
+    zone: europe-west3-a
+    machine_type: n1-standard-1
+    disk_size: 15
+    image: projects/ubuntu-os-cloud/global/images/family/ubuntu-2004-lts
+    groups:
+      - zabbix_server
+
+provisioner:
+  name: ansible
+  inventory:
+    links:
+      group_vars: ../resources/group_vars/
+      host_vars: ../resources/host_vars/
+  env:
+    ANSIBLE_ROLES_PATH: ../../roles/:../../.imported_roles/
+  playbooks:
+    converge: playbook.yml
+    prepare: ../resources/gcp/prepare.yml
+    create: ../resources/gcp/create.yml
+    destroy: ../resources/gcp/destroy.yml
+  lint:
+    name: ansible-lint
+    options:
+      exclude:
+        - .imported_roles/
+
+scenario:
+  name: gcp
+
+verifier:
+  name: testinfra
+  directory: ../resources/tests/
+  options:
+    n: 4
+  lint:
+    name: flake8
