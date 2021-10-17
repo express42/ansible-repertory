@@ -34,7 +34,6 @@ provisioner:
   inventory:
     links:
       group_vars: ../resources/group_vars/
-      host_vars: ../resources/host_vars/
   env:
     ANSIBLE_ROLES_PATH: ../../roles/:../../.imported_roles/
   playbooks:
